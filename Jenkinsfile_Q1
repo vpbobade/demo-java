@@ -23,7 +23,7 @@ pipeline {
         
         stage ("package stage") {
             steps {
-                sh 'mvn clean package
+                sh 'mvn clean package'
 		sh 'chmod -R 777 /var/lib/jenkins/workspace/'
             } 
         }     
