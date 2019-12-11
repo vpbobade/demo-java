@@ -5,7 +5,7 @@ MAINTAINER vpbobade@yahoo.com
 # Trade off is a slightly more complex volume mount vs keeping the image size down.
 
 RUN echo "export JAVA_OPTS=\"-Dapp.env=staging\"" > /usr/local/tomcat/bin/setenv.sh
-COPY */target/demo.war /usr/local/tomcat/webapps/demo.war
+COPY **/*.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 9001
 CMD ["catalina.sh", "run"]
