@@ -7,7 +7,6 @@ pipeline {
 
      agent any
      stages {    
-         
         stage ("git checkout") {
             steps {
                 git ('https://github.com/vpbobade/demo-java')
@@ -30,9 +29,9 @@ pipeline {
         stage ("Building docker image") {
 //Build the docker image with a tag (qualys:sample in this case)
 			steps {
-		    		sh "docker build -f Dockerfile -t vpbobade/mydockerimage:1.0.0 . > docker_out"
-					//sh "./make_docker_image.sh"
-					//docker.build registry
+		    	sh "docker build -f Dockerfile -t vpbobade/mydockerimage:1.0.0 . > docker_out"
+				//sh "./make_docker_image.sh"
+				//docker.build registry
 			}	    
 	    }
 	    
