@@ -62,10 +62,19 @@ pipeline {
 //Use the same environment variable(env.IMAGE_ID) as an input to Qualys Plugin's step
 			steps {
 					getImageVulnsFromQualys useGlobalConfig:true, imageIds: env.IMAGE_ID
-					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY', scanType: 'DISCOVERY' , vulnsTimeout: '60*24', webAppId: '3919083', propagate: false						
+			}
+		}
+					
+		stage ('Performing Vulnerability Security Scanning')			
+					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY' , vulnsTimeout: '60*24', webAppId: '3919083'					
 			}
 		}	
-	
+		
+		stage ('Performing Discovery Security Scanning')			
+					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'Discovery' , vulnsTimeout: '60*24', webAppId: '3919083'					
+			}
+		}	
+		
 		stage ('Deploy to Dev') {
 			steps {
 				script {	
