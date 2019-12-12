@@ -65,12 +65,14 @@ pipeline {
 			}
 		}
 					
-		stage ('Performing Vulnerability Security Scanning')			
+		stage ('Performing Vulnerability Security Scanning') {	
+			steps {
 					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY' , vulnsTimeout: '60*24', webAppId: '3919083'					
 			}
 		}	
 		
-		stage ('Performing Discovery Security Scanning')			
+		stage ('Performing Discovery Security Scanning') {		
+			steps {
 					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'Discovery' , vulnsTimeout: '60*24', webAppId: '3919083'					
 			}
 		}	
