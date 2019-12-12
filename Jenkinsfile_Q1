@@ -58,10 +58,11 @@ pipeline {
 //Start Using the Plugin
 //Define docker image Ids
 
-		stage ('Get ImageVulns - Qualys Plugin') {
+		stage ('Get ImageVulns - Qualys Plugin & Running WAS scan tests') {
 //Use the same environment variable(env.IMAGE_ID) as an input to Qualys Plugin's step
 			steps {
 					getImageVulnsFromQualys useGlobalConfig:true, imageIds: env.IMAGE_ID
+					qualysWASScan authRecord: 'default', cancelOptions: 'none', credsId: 'Qualys_Alti', failOnScanError: true, isSev5Vulns: true, optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY','DISCOVERY', vulnsTimeout: '60*24', webAppId: '3919083'
 		    }
         }
 	
