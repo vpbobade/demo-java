@@ -65,10 +65,10 @@ pipeline {
 					getImageVulnsFromQualys useGlobalConfig:true, imageIds: env.IMAGE_ID
 					
 					sh "echo '<--- Performing vulnerability related scanning --->'"
-					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', isSev5Vulns: true, optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY', vulnsTimeout: '60*24', webAppId: '3919083'
+					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY', vulnsTimeout: '60*24', webAppId: '3919083'
 										
 					sh "echo '<---- Performing discovery related scanning ---->'"
-					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', isSev5Vulns: true, optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'DISCOVERY', vulnsTimeout: '60*24', webAppId: '3919083'
+					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'DISCOVERY', vulnsTimeout: '60*24', webAppId: '3919083'
 					
 				}
 			}
