@@ -78,8 +78,7 @@ pipeline {
 					def dockerRun = 'docker run -d  vpbobade/mydemojava:1.0.0'
 						sshagent(['deploy_to_docker']) {
 						sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.81.65 ${dockerRun}"  
-			
-						}    			
+			   			
 					}		
 				} 
 			}    
