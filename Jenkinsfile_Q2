@@ -8,11 +8,14 @@ pipeline {
      agent any
      stages {
      	stage {
-	 		docker {
-            	image 'maven:3-alpine' 
-            	args '-v /root/.m2:/root/.m2' 
+			steps {
+		 		docker {
+            		image 'maven:3-alpine' 
+            		args '-v /root/.m2:/root/.m2' 
+				}	
 			}
 		}
+	 }
 	 
         stage ("git checkout") {
             steps {
