@@ -43,7 +43,7 @@ pipeline {
 	    
 		stage ('Push Docker image to DockerHub') {
 			steps {
-			    withCredentials([usernamePassword(credentialsId: 'mydocker', passwordVariable: 'pass', usernameVariable: 'user')]) {
+				withCredentials([usernamePassword(credentialsId: 'mydocker', passwordVariable: 'pass', usernameVariable: 'user')]) {
 		        sh "docker login -u ${user} -p ${pass}"
 				}
                 sh 'docker push vpbobade/mydemojava:1.0.0'
@@ -88,7 +88,7 @@ pipeline {
 				script {	
 					def dockerRun = 'docker run -d  vpbobade/mydemojava:1.0.0'
 						sshagent(['deploy_to_docker']) {
-						sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.81.65 ${dockerRun}"  
+						sh "ssh -o StrictHostKeyChecking=no centos@ec2-35-175-208-250.compute-1.amazonaws.com ${dockerRun}"  
 			   			
 					}		
 				} 
