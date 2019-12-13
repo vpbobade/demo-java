@@ -9,5 +9,5 @@ COPY pkg/demo.war /usr/local/tomcat/webapps/demo.war
 
 # RUN docker run --rm -p 8080:8080 -d vpbobade/mydemojava:1.0.0
 
-EXPOSE 8080:8080
+EXPOSE 80:8080
 CMD ["catalina.sh", "run"]
