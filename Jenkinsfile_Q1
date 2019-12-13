@@ -73,7 +73,7 @@ pipeline {
 */				
 		stage ('Performing Discovery Security Scanning') {		
 			steps {
-					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'Discovery' , vulnsTimeout: '60*24', webAppId: '3919083'					
+					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'DISCOVERY', vulnsTimeout: '60*24', webAppId: '3919083'									
 			}
 		}	
 		
