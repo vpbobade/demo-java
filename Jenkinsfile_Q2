@@ -1,0 +1,107 @@
+pipeline { 
+
+//	  environment {
+//    registry = "mydocker/vpbobade"
+//    registryCredential = 'mydocker'
+//}
+
+     agent any
+     stages {    
+	 	docker {
+            image 'maven:3-alpine' 
+            args '-v /root/.m2:/root/.m2' 
+			}
+		}
+	 
+        stage ("git checkout") {
+            steps {
+                git ('https://github.com/vpbobade/demo-java')
+            }
+        }
+    
+        stage ("Checkout to different branch") {
+            steps {
+                sh "git branch -r"
+                sh "git checkout master"
+            } 
+        }    
+        
+        stage ("package stage") {
+            steps {
+                sh 'bin/build'
+            } 
+        }     
+        
+        stage ("Building docker image") {
+//Build the docker image with a tag (qualys:sample in this case)
+			steps {
+		    	sh "docker build -f Dockerfile -t vpbobade/mydemojava:1.0.0 . > docker_out"
+				//sh "./make_docker_image.sh"
+				//docker.build registry
+			}	    
+	    }
+	    
+		stage ('Push Docker image to DockerHub') {
+			steps {
+			    withCredentials([usernamePassword(credentialsId: 'mydocker', passwordVariable: 'pass', usernameVariable: 'user')]) {
+		        sh "docker login -u ${user} -p ${pass}"
+				}
+                sh 'docker push vpbobade/mydemojava:1.0.0'
+            }
+        }
+	
+	
+		stage ('Get Image id') {
+//Use the same repo:tag (qualys:sample in this case) combination with the grep command to get the same image id and save the image id in an environment variable
+			steps {
+				script {
+					def IMAGE_ID = sh(script: "docker images | grep -E '^vpbobade/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
+						env.IMAGE_ID = IMAGE_ID
+				}
+			}
+	    }
+	
+//Start Using the Plugin
+//Define docker image Ids
+
+		stage ('Get ImageVulns - Qualys Plugin') {
+//Use the same environment variable(env.IMAGE_ID) as an input to Qualys Plugin's step
+			steps {
+					getImageVulnsFromQualys useGlobalConfig:true, imageIds: env.IMAGE_ID
+			}
+		}
+/*					
+		stage ('Performing Vulnerability Security Scanning') {	
+			steps {
+					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY' , vulnsTimeout: '60*24', webAppId: '3919083'					
+			}
+		}
+*/				
+		stage ('Performing Discovery Security Scanning') {		
+			steps {
+					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'DISCOVERY', vulnsTimeout: '60*24', webAppId: '3919083'									
+			}
+		}	
+		
+		stage ('Deploy to Dev') {
+			steps {
+				script {	
+					def dockerRun = 'docker run -d  vpbobade/mydemojava:1.0.0'
+						sshagent(['deploy_to_docker']) {
+						sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.81.65 ${dockerRun}"  
+			   			
+					}		
+				} 
+			}    
+		}
+    }	
+}
+
+/*	
+		post { 
+        always { 
+            cleanWs()
+	    }	
+	} 
+}
+*/
