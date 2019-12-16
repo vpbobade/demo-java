@@ -36,7 +36,7 @@ pipeline {
 				docker.withTool('myDocker') { 
 						docker.withRegistry('https://536285340728.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:AWS_CREDS') {
 							//docker.build("${config.ImageName}:${config.ImageVersion}", "$WORKSPACE/first-stash")
-						    docker build -f Dockerfile -t vpbobade/mydemojava:1.0.0 . > docker_out"
+						    docker.build("vpbobade/mydemojava:1.0.0" , ".")
 					
 				/* Push Image to ECR */
 			
