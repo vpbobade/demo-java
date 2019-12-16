@@ -7,5 +7,3 @@
 # other build files that bloats the upload context sent to docker.
 mkdir -p pkg
 mv target/demo.war pkg/demo.war
-
-docker build -t vpbobade/mydemojava:1.0.0 .
