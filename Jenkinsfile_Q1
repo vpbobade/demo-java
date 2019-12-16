@@ -37,9 +37,9 @@ pipeline {
 					docker.withTool('myDocker') { 
 						docker.withRegistry('https://536285340728.dkr.ecr.us-east-1.amazonaws.com/vbob_qualys','ecr:us-east-1:vbob_aws') {
 							//docker.build("${config.ImageName}:${config.ImageVersion}", "$WORKSPACE/first-stash")
-							docker.build("mydemojava:1.0.0", ".")
+							docker.build("vbob_qualys/mydemojava:1.0.0", ".")
 							//docker.image("${config.ImageName}:${config.ImageVersion}").push()
-								docker.image("mydemojava:1.0.0").push()
+								docker.image("vbob_qualys/mydemojava:1.0.0").push()
 								
 					}
 				}
@@ -67,7 +67,7 @@ pipeline {
 //Use the same repo:tag (qualys:sample in this case) combination with the grep command to get the same image id and save the image id in an environment variable
 			steps {
 				script {
-					def IMAGE_ID = sh(script: "docker images | grep -E '^vpbobade/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
+					def IMAGE_ID = sh(script: "docker images | grep -E '^vbob_qualys/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
 						env.IMAGE_ID = IMAGE_ID
 				}
 			}
