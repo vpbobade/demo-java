@@ -35,11 +35,12 @@ pipeline {
 			steps {
 				script {
 					docker.withTool('myDocker') { 
-						docker.withRegistry('https://536285340728.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:AWS_CREDS') {
+						docker.withRegistry('https://536285340728.dkr.ecr.us-east-1.amazonaws.com','ecr:us-east-1:vbob_qualys') {
 							//docker.build("${config.ImageName}:${config.ImageVersion}", "$WORKSPACE/first-stash")
-						    docker.build("vpbobade/mydemojava:1.0.0" , ".")
+							docker.build("vpbobade/mydemojava:1.0.0" , ".")
 							//docker.image("${config.ImageName}:${config.ImageVersion}").push()
 								docker.image("vpbobade/mydemojava:1.0.0").push()
+								
 					}
 				}
 			}
