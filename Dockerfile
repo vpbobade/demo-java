@@ -1,6 +1,11 @@
 FROM tomcat:8.5
 MAINTAINER vpbobade@yahoo.com
 
+RUN apt-get update && \
+      apt-get -y install sudo
+
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+
 # Debugging tools: A few ways to handle debugging tools.
 # Trade off is a slightly more complex volume mount vs keeping the image size down.
 
@@ -11,3 +16,4 @@ COPY pkg/demo.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 80:8080
 CMD ["catalina.sh", "run"]
+
