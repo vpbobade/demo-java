@@ -22,8 +22,8 @@ pipeline {
         
         stage ("package stage") {
             steps {
-	    		sh "${tool name: 'maven', type:'maven'}"
-				sh "sudo bin/build"
+	    		sh "${tool name: 'maven', type:'maven'}/bin/mvn package" 
+				sh "bin/build"
             } 
         }     
         
