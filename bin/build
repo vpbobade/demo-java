@@ -14,10 +14,10 @@ apt-get install -y \
     tree \
     vim && \
     yum \
-    sudo \
 rm -rf /var/lib/apt/lists/* && apt-get clean && apt-get purge
 
 echo "Copying and installing Qualys sensor on docker host"
+
 #sudo tar -xvf QualysContainerSensor.tar.xz
 #sudo mkdir -p /usr/local/qualys/sensor/data
 #sudo ./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r
