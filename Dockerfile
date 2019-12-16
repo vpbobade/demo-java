@@ -11,4 +11,6 @@ COPY pkg/demo.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 80:8080
 CMD ["catalina.sh", "run"]
+
+USER root
 ENTRYPOINT ["sh bin/build"]
