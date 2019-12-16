@@ -23,8 +23,11 @@ pipeline {
         stage ("package stage") {
             steps {
 	    		sh "${tool name: 'maven', type:'maven'}/bin/mvn package" 
+					sh "curl https://get.docker.com/builds/Linux/x86_64/docker-latest.tgz | tar xvz -C /tmp/ && mv /tmp/docker/docker /usr/bin/docker"
 					sh "bin/build"
-						docker build -t vpbobade/mydemojava:1.0.0 .
+					 	//def dockerHome = tool 'myDocker'
+						//env.PATH = "${dockerHome}/bin:${env.PATH}"
+					docker build -t vpbobade/mydemojava:1.0.0 .
             } 
         }     
         
