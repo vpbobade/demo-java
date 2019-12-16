@@ -1,17 +1,6 @@
 FROM tomcat:8.5
 MAINTAINER vpbobade@yahoo.com
 
-USER root
-
-RUN apt-get update && \
-  apt-get install -y \
-    net-tools \
-    tree \
-    vim && \
-    yum \
-    sudo \
-  rm -rf /var/lib/apt/lists/* && apt-get clean && apt-get purge
-
 # Debugging tools: A few ways to handle debugging tools.
 # Trade off is a slightly more complex volume mount vs keeping the image size down.
 
@@ -22,4 +11,4 @@ COPY pkg/demo.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 80:8080
 CMD ["catalina.sh", "run"]
-USER 1001
+ENTRYPOINT ["./start.sh"]
