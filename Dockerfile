@@ -1,8 +1,8 @@
 FROM tomcat:8.5
 MAINTAINER vpbobade@yahoo.com
 
-RUN apt-get update && \
-      apt-get -y install sudo
+RUN yum update -y && \
+      yum -y install sudo
 
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
