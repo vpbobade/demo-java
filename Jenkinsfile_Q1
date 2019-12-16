@@ -37,9 +37,9 @@ pipeline {
 					docker.withTool('myDocker') { 
 						docker.withRegistry('https://536285340728.dkr.ecr.us-east-1.amazonaws.com','ecr:us-east-1:vbob_aws') {
 							//docker.build("${config.ImageName}:${config.ImageVersion}", "$WORKSPACE/first-stash")
-							docker.build("${config.ImageName}:${config.ImageVersion}", ".")
+							docker.build('vbob_qualys')
 							//docker.image("${config.ImageName}:${config.ImageVersion}").push()
-								docker.image("${config.ImageName}:${config.ImageVersion}").push()
+								docker.image('vbob_qualys').push('latest')
 								
 					}
 				}
