@@ -2,7 +2,6 @@ FROM tomcat:8.5
 MAINTAINER vpbobade@yahoo.com
 
 USER root
-USER 1001
 
 RUN apt-get update && \
   apt-get install -y \
@@ -23,3 +22,4 @@ COPY pkg/demo.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 80:8080
 CMD ["catalina.sh", "run"]
+USER 1001
