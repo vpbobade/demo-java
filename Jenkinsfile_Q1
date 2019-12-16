@@ -22,7 +22,7 @@ pipeline {
         
         stage ("package stage") {
             steps {
-	    	sh "${tool name: 'maven', type:'maven'} 
+	    	sh "${tool name: 'maven', type:'maven'}"
 		sh "bin/build"
             } 
         }     
