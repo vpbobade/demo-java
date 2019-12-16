@@ -103,15 +103,13 @@ pipeline {
 						sshagent(['deploy_to_docker']) {
 						sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.81.65 ${dockerRun}"  
 			   			
-					}		
-				} 
-			}    
-		}
-    }	
-}	
-
-/*	
-		post { 
+				}		
+			} 
+		}    
+	}
+ 
+ /*	
+	post { 
         always { 
             cleanWs()
 	    }	
