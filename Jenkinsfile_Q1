@@ -49,7 +49,7 @@ pipeline {
 		}
 	}
 
-		    	sh "docker build -f Dockerfile -t vpbobade/mydemojava:1.0.0 . > docker_out"
+		    	//sh "docker build -f Dockerfile -t vpbobade/mydemojava:1.0.0 . > docker_out"
 				//sh "./make_docker_image.sh"
 				//docker.build registry
 			}	    
