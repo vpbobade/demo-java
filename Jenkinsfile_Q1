@@ -23,8 +23,8 @@ pipeline {
         stage ("package stage") {
             steps {
 	    		sh "${tool name: 'maven', type:'maven'}/bin/mvn package" 
-			sh "bin/build"
-			docker build -t vpbobade/mydemojava:1.0.0 .
+					sh "bin/build"
+						docker build -t vpbobade/mydemojava:1.0.0 .
             } 
         }     
         
