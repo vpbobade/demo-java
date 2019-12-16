@@ -23,7 +23,8 @@ pipeline {
         stage ("package stage") {
             steps {
 	    	sh "${tool name: 'maven', type:'maven'}"
-		sh "sudo bin/build"
+		sh "chmod a+x /var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/maven"
+		sh "bin/build"
             } 
         }     
         
