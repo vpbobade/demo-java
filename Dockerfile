@@ -1,6 +1,9 @@
 FROM tomcat:8.5
 MAINTAINER vpbobade@yahoo.com
 
+USER root
+USER 1001
+
 RUN apt-get update && \
   apt-get install -y \
     net-tools \
