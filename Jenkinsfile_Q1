@@ -1,58 +1,55 @@
 pipeline {
 	agent any
-    stages {
+    	stages {
 		stage ("git checkout") {
-        	steps {
-                git ('https://github.com/vpbobade/demo-java')
-				
-				}
-            }
-        }
+			steps {
+				git ('https://github.com/vpbobade/demo-java')
+		}
+	}
+ }
     
       	stage ("Checkout to different branch") {
-			steps {
-                sh "git branch -r"
+		steps {
+                	sh "git branch -r"
                 	sh "git checkout master"
-            } 
-        }    
+		}
+	}
+        
+     
         
         stage ("package stage") {
-            steps {
-				sh "${tool name: 'maven', type:'maven'}/bin/mvn package"
-					sh "bin/build"			
-            } 
+		steps {
+			sh "${tool name: 'maven', type:'maven'}/bin/mvn package"
+			sh "bin/build"			
+        	} 
         }     	
 /*
-		stage ("Deploying Qualys sensor on docker host") {
-			steps {
-				script {
-					sh "./qualys_install.sh"
+	stage ("Deploying Qualys sensor on docker host") {
+		steps {
+			script {
+				sh "./qualys_install.sh"
 						//sh "sudo curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && sudo tar -xf QualysContainerSensor.tar.xz"
 						//sh "sudo mkdir -p /usr/local/qualys/sensor/data"
 						//sh "sudo ./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"					
-				}
 			}
-		}						
+		}
+	}						
  */       
         stage ("Building docker image") {
 //Build the docker image with a tag (qualys:sample in this case)
-			steps {
-				script {
-					docker.withTool('myDocker') { 
-						docker.withRegistry('https://536285340728.dkr.ecr.us-east-1.amazonaws.com','ecr:us-east-1:vbob_aws') {
-							//docker.build("${config.ImageName}:${config.ImageVersion}", "$WORKSPACE/first-stash")
-							docker.build('vbob_qualys')
+		steps {
+			script {
+				docker.withTool('myDocker') {
+					docker.withRegistry('https://536285340728.dkr.ecr.us-east-1.amazonaws.com','ecr:us-east-1:vbob_aws') {
+						//docker.build("${config.ImageName}:${config.ImageVersion}", "$WORKSPACE/first-stash")
+						docker.build('vbob_qualys')
 							//docker.image("${config.ImageName}:${config.ImageVersion}").push()
-								docker.image('vbob_qualys').push('latest')
+							docker.image('vbob_qualys').push('latest')
 					}
 				}
 			}
 		}
 	}
-
-		    	//sh "docker build -f Dockerfile -t vpbobade/mydemojava:1.0.0 . > docker_out"
-				//sh "./make_docker_image.sh"
-				//docker.build registry
 		
 /*	    
 		stage ('Push Docker image to DockerHub') {
@@ -63,19 +60,19 @@ pipeline {
                 sh 'docker push vpbobade/mydemojava:1.0.0'
             }
         }
-*/	
 	
-		stage ('Get Image id') {
+	
+	stage ('Get Image id') {
 //Use the same repo:tag (qualys:sample in this case) combination with the grep command to get the same image id and save the image id in an environment variable
-			steps {
-				script {
-					//def IMAGE_ID = sh(script: "docker images | grep -E '^vbob_qualys/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
-						//env.IMAGE_ID = IMAGE_ID
-					//def IMAGE_ID = sh ()
+		steps {
+			script {
+				//def IMAGE_ID = sh(script: "docker images | grep -E '^vbob_qualys/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
+				//env.IMAGE_ID = IMAGE_ID
+				//def IMAGE_ID = sh ()
 				}
 			}
-	    }
-	
+*/
+
 //Start Using the Plugin
 //Define docker image Ids
 
