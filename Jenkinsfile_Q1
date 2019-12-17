@@ -32,11 +32,12 @@ pipeline {
 					 	//docker build -t vpbobade/mydemojava:1.0.0 .
 						
             } 
-        }     		
+        }     	
+		
 		stage ("Deploying Qualys sensor on docker host") {
 			steps {
 				script {
-					docker.withTool('myDocker') {
+					docker {
 						docker run --rm -v /usr/bin:/usr/bin --privileged -v $(pwd)/qualys_install.sh:/qualys_install.sh linux bash /qualys_install.sh
 
 						//sh "sudo curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && sudo tar -xf QualysContainerSensor.tar.xz"
