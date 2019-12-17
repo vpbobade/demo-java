@@ -37,7 +37,7 @@ pipeline {
 				}
 			}
 		}
-	}							
+							
         
         stage ("Building docker image") {
 //Build the docker image with a tag (qualys:sample in this case)
