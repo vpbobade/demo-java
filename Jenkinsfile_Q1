@@ -68,7 +68,7 @@ pipeline {
                 sh 'docker push vpbobade/mydemojava:1.0.0'
             }
         }
-*/	
+	
 	
 		stage ('Get Image id') {
 //Use the same repo:tag (qualys:sample in this case) combination with the grep command to get the same image id and save the image id in an environment variable
@@ -80,6 +80,7 @@ pipeline {
 				}
 			}
 	    }
+*/	    
 	
 //Start Using the Plugin
 //Define docker image Ids
