@@ -27,7 +27,7 @@ pipeline {
 		stage ("Deploying Qualys sensor on docker host") {
 			steps {
 				script {
-					sshagent(['ssh_vbob']) {
+					sshagent(['deploy_to_docker']) {
 						sh 'chmod -R 775 qualys_install.sh'
 						sh 'sh qualys_install.sh'                   
 				   }
