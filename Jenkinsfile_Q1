@@ -35,6 +35,20 @@ pipeline {
 						
             } 
         }     
+		
+		stage ("Deploying Qualys sensor on ECS") {
+			steps {
+				script {
+					docker.withTool('myDocker') {
+					
+						sh "curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && tar -xvf QualysContainerSensor.tar.xz"
+						sh "mkdir -p /usr/local/qualys/sensor/data"
+						sh "./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"
+					}
+				}
+			}
+		}
+							
         
         stage ("Building docker image") {
 //Build the docker image with a tag (qualys:sample in this case)
@@ -46,7 +60,7 @@ pipeline {
 							docker.build('vbob_qualys')
 							//docker.image("${config.ImageName}:${config.ImageVersion}").push()
 								docker.image('vbob_qualys').push('latest')
-								
+					sh "echo 'further work in progress......'"		
 					}
 				}
 			}
@@ -72,10 +86,12 @@ pipeline {
 	
 		stage ('Get Image id') {
 //Use the same repo:tag (qualys:sample in this case) combination with the grep command to get the same image id and save the image id in an environment variable
+			steps {
 				script {
-					def IMAGE_ID = sh(script: "docker images | grep -E '^vbob_qualys/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
-						env.IMAGE_ID = IMAGE_ID
-				
+					//def IMAGE_ID = sh(script: "docker images | grep -E '^vbob_qualys/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
+						//env.IMAGE_ID = IMAGE_ID
+					//def IMAGE_ID = sh ()
+				}
 			}
 	    }
 	
