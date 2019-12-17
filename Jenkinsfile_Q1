@@ -58,7 +58,6 @@ pipeline {
 				//sh "./make_docker_image.sh"
 				//docker.build registry
 			}	    
-	    }
 		
 /*	    
 		stage ('Push Docker image to DockerHub') {
