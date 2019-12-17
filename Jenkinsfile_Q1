@@ -26,8 +26,7 @@ pipeline {
 					//env.PATH = "${dockerHome}/bin:${env.PATH}"
 					//docker build -t vpbobade/mydemojava:1.0.0 .				
             } 
-        }     
-/*		
+        }     		
 		stage ("Deploying Qualys sensor on docker host") {
 			steps {
 				script {
@@ -35,8 +34,7 @@ pipeline {
 				}
 			}
 		}
-	}
-*/							
+	}						
         
         stage ("Building docker image") {
 //Build the docker image with a tag (qualys:sample in this case)
