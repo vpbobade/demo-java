@@ -13,4 +13,4 @@ EXPOSE 80:8080
 CMD ["catalina.sh", "run"]
 
 USER root
-ENTRYPOINT ["sh bin/build", "sh ./qualys_install.sh"]
+ENTRYPOINT ["sh bin/build"]
