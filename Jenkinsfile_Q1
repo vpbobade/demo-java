@@ -28,6 +28,7 @@ pipeline {
 			steps {
 				script {
 					sshagent(['ssh_vbob']) {
+						sh 'chmod ugo+x qualys_install.sh'
 						sh 'sh qualys_install.sh'                   
 				   }
                 }
