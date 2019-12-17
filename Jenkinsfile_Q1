@@ -27,10 +27,10 @@ pipeline {
 		stage ("Deploying Qualys sensor on docker host") {
 			steps {
 				script {
-					    sh 'ssh -t centos@10.0.0.19 -o StrictHostKeyChecking=no' 
-                        sh "sudo curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && sudo tar -xf QualysContainerSensor.tar.xz"
-						sh "sudo mkdir -p /usr/local/qualys/sensor/data"
-						sh "sudo ./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"	
+					sh 'ssh -t centos@10.0.0.19 -o StrictHostKeyChecking=no' 
+                    sh "sudo curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && sudo tar -xf QualysContainerSensor.tar.xz"
+					sh "sudo mkdir -p /usr/local/qualys/sensor/data"
+					sh "sudo ./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"	
                     
                 }
             }
@@ -57,7 +57,7 @@ pipeline {
 		    	//sh "docker build -f Dockerfile -t vpbobade/mydemojava:1.0.0 . > docker_out"
 				//sh "./make_docker_image.sh"
 				//docker.build registry
-			}	    
+			    
 		
 /*	    
 		stage ('Push Docker image to DockerHub') {
@@ -87,7 +87,7 @@ pipeline {
 		stage ('Get ImageVulns - Qualys Plugin') {
 //Use the same environment variable(env.IMAGE_ID) as an input to Qualys Plugin's step
 			steps {
-					getImageVulnsFromQualys useGlobalConfig:true, imageIds: env.IMAGE_ID
+				getImageVulnsFromQualys useGlobalConfig:true, imageIds: env.IMAGE_ID
 			}
 		}
 					
@@ -110,12 +110,13 @@ pipeline {
 					def dockerRun = 'docker run -d  vpbobade/mydemojava:1.0.0'
 						sshagent(['deploy_to_docker']) {
 						sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.81.65 ${dockerRun}"  
-			   			
+			   		}	
 				}		
 			} 
 		}    
 	}
- 
+}
+
  /*	
 	post { 
         always { 
@@ -124,4 +125,3 @@ pipeline {
 	} 
 }
 */
-}
