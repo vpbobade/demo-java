@@ -22,20 +22,17 @@ pipeline {
         
         stage ("package stage") {
             steps {
-						
-							sh "${tool name: 'maven', type:'maven'}/bin/mvn package"
-								sh "bin/build"
-									//sh "curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && tar -xf QualysContainerSensor.tar.xz"
-										//sh "mkdir -p /usr/local/qualys/sensor/data"
-											//sh "./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"
-					
+				sh "${tool name: 'maven', type:'maven'}/bin/mvn package"
+					sh "bin/build"
+						//sh "curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && tar -xf QualysContainerSensor.tar.xz"
+						//sh "mkdir -p /usr/local/qualys/sensor/data"
+						//sh "./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"
 					 	//def dockerHome = tool 'myDocker'
 						//env.PATH = "${dockerHome}/bin:${env.PATH}"
-					  //docker build -t vpbobade/mydemojava:1.0.0 .
+					 	//docker build -t vpbobade/mydemojava:1.0.0 .
 						
             } 
-        }     
-/*		
+        }     		
 		stage ("Deploying Qualys sensor on docker host") {
 			steps {
 				script {
@@ -48,8 +45,7 @@ pipeline {
 					}
 				}
 			}
-		}
-*/							
+		}						
         
         stage ("Building docker image") {
 //Build the docker image with a tag (qualys:sample in this case)
