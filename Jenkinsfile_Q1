@@ -1,10 +1,4 @@
 pipeline { 
-
-//	  environment {
-//    registry = "mydocker/vpbobade"
-//    registryCredential = 'mydocker'
-//}
-
      agent any
      stages {    
 	 	stage ("git checkout") {
@@ -22,30 +16,30 @@ pipeline {
         
         stage ("package stage") {
             steps {
-						
-							sh "${tool name: 'maven', type:'maven'}/bin/mvn package"
-								sh "bin/build"
-									//sh "curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && tar -xf QualysContainerSensor.tar.xz"
-										//sh "mkdir -p /usr/local/qualys/sensor/data"
-											//sh "./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"
+				sh "${tool name: 'maven', type:'maven'}/bin/mvn package"
+				sh "bin/build"
+					//sh "curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && tar -xf QualysContainerSensor.tar.xz"
+					//sh "mkdir -p /usr/local/qualys/sensor/data"
+					//sh "./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"
 					
-					 	//def dockerHome = tool 'myDocker'
-						//env.PATH = "${dockerHome}/bin:${env.PATH}"
-					  //docker build -t vpbobade/mydemojava:1.0.0 .
-						
+					//def dockerHome = tool 'myDocker'
+					//env.PATH = "${dockerHome}/bin:${env.PATH}"
+					//docker build -t vpbobade/mydemojava:1.0.0 .				
             } 
         }     
 /*		
 		stage ("Deploying Qualys sensor on docker host") {
 			steps {
 				script {
-						//sh "sudo curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && sudo tar -xf QualysContainerSensor.tar.xz"
-						sh "sudo mkdir -p /usr/local/qualys/sensor/data"
-						sh "sudo ./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"
-					}
+				
+				//sh "sudo curl https://atmet8vb.s3.amazonaws.com/QualysContainerSensor.tar.xz && sudo tar -xf QualysContainerSensor.tar.xz"
+				sh "sudo mkdir -p /usr/local/qualys/sensor/data"
+				sh "sudo ./installsensor.sh ActivationId=26ed0e3d-cffe-4c6b-9e79-bfaac22f1557 CustomerId=b34ba2b7-acfa-6ffc-83e6-7eff4061769f Storage=/usr/local/qualys/sensor/data -s -r"
+					
 				}
 			}
 		}
+	}
 */							
         
         stage ("Building docker image") {
@@ -58,7 +52,8 @@ pipeline {
 							docker.build('vbob_qualys')
 							//docker.image("${config.ImageName}:${config.ImageVersion}").push()
 								docker.image('vbob_qualys').push('latest')
-					sh "echo 'further work in progress......'"		
+					sh "echo 'further work in progress......'"	
+					
 					}
 				}
 			}
@@ -74,7 +69,7 @@ pipeline {
 /*	    
 		stage ('Push Docker image to DockerHub') {
 			steps {
-			    withCredentials([usernamePassword(credentialsId: 'mydocker', passwordVariable: 'pass', usernameVariable: 'user')]) {
+				withCredentials([usernamePassword(credentialsId: 'mydocker', passwordVariable: 'pass', usernameVariable: 'user')]) {
 		        sh "docker login -u ${user} -p ${pass}"
 				}
                 sh 'docker push vpbobade/mydemojava:1.0.0'
@@ -87,7 +82,7 @@ pipeline {
 			steps {
 				script {
 					//def IMAGE_ID = sh(script: "docker images | grep -E '^vbob_qualys/mydemojava:*' | head -1  | awk '{print \$3}'", returnStdout:true).trim()
-						//env.IMAGE_ID = IMAGE_ID
+					//env.IMAGE_ID = IMAGE_ID
 					//def IMAGE_ID = sh ()
 				}
 			}
@@ -106,13 +101,13 @@ pipeline {
 					
 		stage ('Performing Discovery Security Scanning') {		
 			steps {
-					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'DISCOVERY', vulnsTimeout: '60*24', webAppId: '3919083'									
+				qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'DISCOVERY', vulnsTimeout: '60*24', webAppId: '3919083'									
 			}
 		}	
 		
 		stage ('Performing Vulnerability Security Scanning') {	
 			steps {
-					qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY' , vulnsTimeout: '60*24', webAppId: '3919083'					
+				qualysWASScan authRecord: 'useDefault', cancelOptions: 'none', credsId: 'Qualys_Alti', optionProfile: 'useDefault', platform: 'INDIA_PLATFORM', pollingInterval: '5', scanName: '[job_name]_jenkins_build_[build_number]', scanType: 'VULNERABILITY' , vulnsTimeout: '60*24', webAppId: '3919083'					
 			}
 		}
 		
