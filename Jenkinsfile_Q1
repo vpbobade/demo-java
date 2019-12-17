@@ -28,7 +28,7 @@ pipeline {
 			steps {
 				script {
 					sshagent(['ssh_vbob']) {
-						sh './qualys_install.sh'                   
+						sh 'sh qualys_install.sh'                   
 				   }
                 }
             }
