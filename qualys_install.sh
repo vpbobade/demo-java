@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Installing Qualys container sensor on remote docker host..."
+echo "Installing Qualys container sensor on docker host..."
 
 ssh -t -t centos@10.0.0.19 -o StrictHostKeyChecking=no
 #ssh -t -t ec2-user@54.211.80.151 -o StrictHostKeyChecking=no
